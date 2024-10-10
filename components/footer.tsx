@@ -28,6 +28,12 @@ const navigation = [
   //   )
   // },
   {
+    name: 'CV',
+    href: 'https://ahmetahmedov.com/cv',
+    icon: null,
+    text: "CV"
+  },
+  {
     name: 'LinkedIn',
     href: 'https://www.linkedin.com/in/ahmet-ahmedov/',
     icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
@@ -44,7 +50,9 @@ const navigation = [
     href: 'https://x.com/0xahmedov',
     icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
       <svg fill='currentColor' viewBox='0 0 24 24' {...props}>
-        <path d='M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z' />
+        <path
+          d='M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z'
+        />
       </svg>
     )
   },
@@ -78,7 +86,8 @@ export default function Footer() {
                 className='text-muted-foreground hover:text-foreground'
               >
                 <span className='sr-only'>{item.name}</span>
-                <item.icon aria-hidden='true' className='h-5 w-5' />
+                {item.icon && <item.icon aria-hidden='true' className='h-5 w-5'/>}
+                <span className="font-bold">{item.text}</span>
               </a>
             ))}
           </div>
