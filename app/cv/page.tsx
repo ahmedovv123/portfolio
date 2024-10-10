@@ -1,10 +1,14 @@
 import { getCV } from '@/lib/cv'
-import PostsWithSearch from '@/components/posts-with-search'
 import MDXContent from "@/components/mdx-content";
 import React from "react";
+import { notFound } from "next/navigation";
 
 export default async function PostsPage() {
   const cv = await getCV()
+
+  if (!cv)
+    notFound()
+
   const { content } = cv
 
   return (
