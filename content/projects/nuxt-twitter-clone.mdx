@@ -1,0 +1,55 @@
+---
+title: Nuxt Twitter Clone
+summary: A Twitter clone app made with nuxt 3
+image: /images/projects/twitter-clone.jpeg
+author: 'Ahmet Ahmedov'
+publishedAt: '2024-10-10'
+---
+
+# Fullstack Twitter Clone
+
+[Demo](https://nuxt-twitter-clone-sigma.vercel.app/)
+
+### Overview
+This project is a fully functional Twitter clone built using **Nuxt 3** for the front-end and back-end. The application allows users to create accounts, log in, post tweets (with media support), and interact with other users' content. I implemented a variety of technologies and services to ensure that the app is secure, scalable, and user-friendly.
+
+### Features
+- **User Authentication**: Users can create accounts and log in securely with hashed passwords.
+- **Media Uploads**: Users can upload images or videos with their posts, stored securely in the cloud.
+- **Interactive Timeline**: Users can post, like, and interact with tweets in real time.
+- **Readable Timestamps**: Each post is displayed with a human-readable timestamp for better UX.
+
+### Tech Stack
+
+#### Frontend
+- **Nuxt 3**: A powerful Vue.js framework used for building both the frontend and backend of the app, ensuring a smooth and optimized user experience.
+- **Tailwind CSS**: A utility-first CSS framework that speeds up the development of responsive and modern designs.
+- **Heroicons**: A simple and elegant icon library that provides a consistent look throughout the app.
+
+#### Backend
+- **Nuxt 3 Server-Side**: I leveraged the backend capabilities of Nuxt 3 to handle user authentication, post creation, and API interactions.
+- **Prisma ORM**: Used for managing database interactions in a type-safe manner, ensuring efficient and optimized queries to the database.
+- **Mitt**: A tiny event emitter that handles real-time event management across components, enabling features like live tweet updates.
+- **Formidable**: Handles form data and file uploads, including large media files, efficiently in the backend.
+
+#### Media Management
+- **Cloudinary**: A cloud-based media management service used for uploading and storing images and videos attached to tweets, ensuring fast loading times and high availability.
+
+#### Security
+- **bcrypt**: Used for securely hashing user passwords before they are stored in the database, providing strong protection for sensitive user data.
+
+#### Time Management
+- **human-time**: Converts standard timestamps into more user-friendly, readable time formats, enhancing the user experience on tweet timestamps (e.g., "5 minutes ago").
+
+#### Routing and URL Patterns
+- **url-pattern**: Used for matching and parsing dynamic URL routes in the backend, allowing the app to be highly flexible with its routing logic.
+
+---
+
+### Key Takeaways
+- **Scalability**: The project is built to be easily scalable. With **Nuxt 3** handling both frontend and backend, and **Cloudinary** taking care of media storage, the app is designed to handle a large number of users and media uploads without performance degradation.
+- **Security**: Using **bcrypt** for password hashing ensures that user data is protected. Prisma's secure database interactions and server-side rendering with Nuxt make the application robust.
+- **Performance**: Optimized with tools like **Tailwind** and **Cloudinary**, ensuring fast load times and responsive design across all devices.
+- **Real-Time Interaction**: With **Mitt** and **human-time**, users can interact with posts in real-time and enjoy a smooth, engaging experience.
+
+---
