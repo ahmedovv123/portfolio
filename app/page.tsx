@@ -1,7 +1,7 @@
 import Intro from "@/components/Intro";
 import RecentPosts from "@/components/recent-posts";
 import RecentProjects from "@/components/recent-projects";
-import NewsletterForm from "@/components/newsletter-form";
+// import NewsletterForm from "@/components/newsletter-form";
 
 export default function Home() {
 
