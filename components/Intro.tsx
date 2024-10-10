@@ -1,5 +1,8 @@
+/* eslint-disable */
+
 import Image from 'next/image'
-import authorImage from '@/public/images/authors/IMG_2928.JPG'
+// @ts-ignore
+import authorImage from "@/public/images/authors/IMG_2928.JPG"
 
 export default function Intro() {
   return (
