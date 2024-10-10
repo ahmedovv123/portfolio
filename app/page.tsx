@@ -11,7 +11,7 @@ export default function Home() {
         <Intro />
         <RecentPosts />
         <RecentProjects />
-        <NewsletterForm />
+        {/*<NewsletterForm />*/}
       </div>
     </section>
   )
