@@ -16,7 +16,7 @@ export async function generateStaticParams() {
   return slugs
 }
 
-export async function generateMetadata({ params }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata | unknown> {
   const { slug } = params
   const post = await getPostBySlug(slug)
 
@@ -24,39 +24,44 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     notFound()
 
   const { metadata } = post
-  const { title, image, summary, keywords } = metadata
+  const { title, image, summary, keywords, author } = metadata
 
   const data = {
     title,
     description: summary,
+    authors: [author],
+    metadataBase: new URL('https://ahmetahmedov.com'),
     keywords,
     openGraph: {
       title,
       description: summary,
-      type: 'article'
+      type: 'article',
+      images: new Array<unknown>(),
+
     },
     twitter: {
       title,
       description: summary,
+      images: new Array<unknown>()
     }
   }
 
   if (image) {
-    data.openGraph.images = [
+    data.openGraph.images.push(
       {
         url: image,
         width: 1200,
         height: 600
       }
-    ]
+    )
 
-    data.twitter.images = [
+    data.twitter.images.push(
       {
         url: image,
         width: 1200,
         height: 600
       }
-    ]
+    )
   }
 
   return data
