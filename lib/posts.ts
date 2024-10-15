@@ -14,6 +14,7 @@ export type Post = {
 export type PostMetadata = {
   title?: string
   summary?: string
+  keywords?: string
   image?: string
   author?: string
   publishedAt?: string
