@@ -1,0 +1,48 @@
+---
+title: Nuxt AI Chat
+summary: A simple AI chat application built with Nuxt.js and OpenAI
+image: /images/projects/nuxt-ai-chat.png
+author: 'Ahmet Ahmedov'
+publishedAt: '2025-07-24'
+---
+
+[Demo](https://aa-nuxt-chat.netlify.app/)
+[GitHub](https://github.com/ahmedovv123/Nuxt-AI-Chat)
+
+A modern chat application built with Nuxt, Vue, and TypeScript, designed for extensibility and developer productivity.
+This project demonstrates full-stack development, authentication, markdown rendering, and seamless integration with GitHub.
+
+## Features
+
+- **GitHub Authentication**: Secure login using OAuth, with automatic user creation and demo data seeding.
+- **Markdown Rendering**: Rich markdown support for chat messages, including tables, code blocks, and GFM extensions.
+- **User Management**: Robust user repository with provider-based identification.
+- **Demo Data Seeding**: Automatic population of demo data for new users to enhance onboarding.
+- **Responsive UI**: Styled components for readable and accessible chat content.
+- **Layered Architecture**: Separation of concerns with clear layers for authentication, data, and UI.
+
+## Technologies
+
+- **Nuxt**: The core framework for building the application, enabling SSR and modular architecture.
+- **Vue 3**: Used for building reactive UI components.
+- **TypeScript**: Ensures type safety and maintainability across the codebase.
+- **Prisma**: ORM for database access, providing type-safe queries and migrations.
+- **pnpm**: Fast, disk-efficient package manager for managing dependencies.
+- **MDX**: Used for documentation and rendering markdown with embedded components.
+- **GitHub OAuth**: Handles authentication and user identity.
+- **Markdown Utilities**: Libraries like `mdast-util-gfm`, `markdown-table`, and `magic-string` for advanced markdown parsing and rendering.
+
+## Configuration & Tooling
+
+- **pnpm**: Dependency management is handled via `pnpm`, ensuring fast installs and strict versioning.
+- **Prisma**: Database models and migrations are managed with Prisma, simplifying data access and schema evolution.
+- **Custom Components**: The `MarkdownRenderer.vue` component provides styled markdown output, leveraging scoped CSS for consistent appearance.
+- **Layered Structure**: The project is organized into layers (`auth`, `base`, etc.) for scalability and maintainability.
+- **TypeScript**: All business logic and API interactions are written in TypeScript for reliability.
+
+## Why This Project?
+
+This chat application showcases best practices in modern web development, including authentication, markdown processing, and clean architecture. It is a solid foundation for real-time communication platforms, knowledge bases, or collaborative tools.
+
+---
+*Feel free to explore the codebase or reach out for more details!*
