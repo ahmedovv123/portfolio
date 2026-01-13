@@ -9,12 +9,13 @@ import { ContactFormSchema } from '@/lib/schemas'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { sendEmail } from "@/lib/actions";
-// import { sendEmail } from '@/lib/actions'
+import { sendEmail } from "@/lib/actions"
+import { useRecaptcha } from '@/composables/useRecaptcha'
 
 type Inputs = z.infer<typeof ContactFormSchema>
 
 export default function ContactForm() {
+  const { executeRecaptcha } = useRecaptcha()
   const {
     register,
     handleSubmit,
@@ -30,7 +31,15 @@ export default function ContactForm() {
   })
 
   const processForm: SubmitHandler<Inputs> = async data => {
-    const result = await sendEmail(data)
+    // Execute reCAPTCHA before submitting
+    const recaptchaToken = await executeRecaptcha('contact_form_submit')
+
+    if (!recaptchaToken) {
+      toast.error('Bot verification failed. Please try again.')
+      return
+    }
+
+    const result = await sendEmail({ ...data, recaptchaToken })
 
     if (result?.error) {
       toast.error('An error occurred! Please try again.')
