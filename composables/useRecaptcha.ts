@@ -13,18 +13,38 @@ declare global {
 
 export function useRecaptcha() {
   useEffect(() => {
+    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+
+    if (!siteKey) {
+      console.warn(
+        'reCAPTCHA site key is not configured. Add NEXT_PUBLIC_RECAPTCHA_SITE_KEY to your .env.local file.'
+      )
+      return
+    }
+
+    // Check if script already exists
+    const existingScript = document.querySelector(
+      `script[src*="recaptcha/api.js"]`
+    )
+    if (existingScript) {
+      return
+    }
+
     const script = document.createElement('script')
-    script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`
     script.async = true
     script.defer = true
+    script.onerror = () => {
+      console.error('Failed to load reCAPTCHA script')
+    }
     document.body.appendChild(script)
 
     return () => {
-      const existingScript = document.querySelector(
-        `script[src="${script.src}"]`
+      const scriptToRemove = document.querySelector(
+        `script[src*="recaptcha/api.js"]`
       )
-      if (existingScript) {
-        document.body.removeChild(existingScript)
+      if (scriptToRemove) {
+        document.body.removeChild(scriptToRemove)
       }
     }
   }, [])
@@ -34,28 +54,42 @@ export function useRecaptcha() {
       const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
       if (!siteKey) {
-        console.error('reCAPTCHA site key is not configured')
+        console.error(
+          'reCAPTCHA site key is not configured. Add NEXT_PUBLIC_RECAPTCHA_SITE_KEY to your .env.local file.'
+        )
         return null
       }
 
       return new Promise(resolve => {
-        if (typeof window.grecaptcha === 'undefined') {
-          console.error('reCAPTCHA script not loaded')
-          resolve(null)
-          return
+        // Wait for script to load with timeout
+        let attempts = 0
+        const maxAttempts = 50 // 5 seconds max wait
+
+        const checkRecaptcha = () => {
+          if (typeof window.grecaptcha !== 'undefined') {
+            window.grecaptcha.ready(() => {
+              window.grecaptcha
+                .execute(siteKey, { action })
+                .then(token => {
+                  resolve(token)
+                })
+                .catch(error => {
+                  console.error('reCAPTCHA execution error:', error)
+                  resolve(null)
+                })
+            })
+          } else if (attempts < maxAttempts) {
+            attempts++
+            setTimeout(checkRecaptcha, 100)
+          } else {
+            console.error(
+              'reCAPTCHA script not loaded after 5 seconds. Make sure NEXT_PUBLIC_RECAPTCHA_SITE_KEY is set correctly.'
+            )
+            resolve(null)
+          }
         }
 
-        window.grecaptcha.ready(() => {
-          window.grecaptcha
-            .execute(siteKey, { action })
-            .then(token => {
-              resolve(token)
-            })
-            .catch(error => {
-              console.error('reCAPTCHA execution error:', error)
-              resolve(null)
-            })
-        })
+        checkRecaptcha()
       })
     },
     []

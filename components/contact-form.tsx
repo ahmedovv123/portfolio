@@ -31,23 +31,34 @@ export default function ContactForm() {
   })
 
   const processForm: SubmitHandler<Inputs> = async data => {
-    // Execute reCAPTCHA before submitting
-    const recaptchaToken = await executeRecaptcha('contact_form_submit')
+    try {
+      // Execute reCAPTCHA before submitting
+      const recaptchaToken = await executeRecaptcha('contact_form_submit')
+     
+      if (!recaptchaToken) {
+        toast.error(
+          'Bot verification failed. Please check your reCAPTCHA configuration.'
+        )
+        return
+      }
 
-    if (!recaptchaToken) {
-      toast.error('Bot verification failed. Please try again.')
-      return
+      const result = await sendEmail(data, recaptchaToken )
+
+      if (result?.error) {
+        const errorMessage =
+          typeof result.error === 'string'
+            ? result.error
+            : 'An error occurred! Please try again.'
+        toast.error(errorMessage)
+        return
+      }
+
+      toast.success('Message sent successfully!')
+      reset()
+    } catch (error) {
+      console.error('Form submission error:', error)
+      toast.error('An unexpected error occurred. Please try again.')
     }
-
-    const result = await sendEmail({ ...data, recaptchaToken })
-
-    if (result?.error) {
-      toast.error('An error occurred! Please try again.')
-      return
-    }
-
-    toast.success('Message sent successfully!')
-    reset()
   }
 
   return (

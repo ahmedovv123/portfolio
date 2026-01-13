@@ -37,15 +37,20 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
   }
 }
 
-export async function sendEmail(data: ContactFormInputs) {
+export async function sendEmail(
+  data: ContactFormInputs,
+  recaptchaToken: string
+) {
+  console.log('data: ', data)
   const result = ContactFormSchema.safeParse(data)
 
   if (result.error) {
     return { error: result.error.format() }
   }
 
+  console.log(result.data)
   // Verify reCAPTCHA token
-  const isValidRecaptcha = await verifyRecaptcha(result.data.recaptchaToken)
+  const isValidRecaptcha = await verifyRecaptcha(recaptchaToken)
 
   if (!isValidRecaptcha) {
     return { error: 'Bot verification failed. Please try again.' }
