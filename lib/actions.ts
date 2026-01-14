@@ -30,7 +30,7 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
     )
 
     const data = await response.json()
-    return data.success === true && data.score >= 0.5
+    return data.success === true && data.score >= 0.8
   } catch (error) {
     console.error('reCAPTCHA verification error:', error)
     return false
@@ -41,14 +41,20 @@ export async function sendEmail(
   data: ContactFormInputs,
   recaptchaToken: string
 ) {
-  console.log('data: ', data)
   const result = ContactFormSchema.safeParse(data)
+
+  if (
+    result.data?.website_url_field &&
+    result.data?.website_url_field.trim() !== ''
+  ) {
+    // honeypot detected
+    return { success: true }
+  }
 
   if (result.error) {
     return { error: result.error.format() }
   }
 
-  console.log(result.data)
   // Verify reCAPTCHA token
   const isValidRecaptcha = await verifyRecaptcha(recaptchaToken)
 

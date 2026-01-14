@@ -154,6 +154,22 @@ export default function ContactForm() {
                 </p>
               )}
             </div>
+
+            {/* Honeypot */}
+            <div className='hidden'>
+              <Input
+                type='text'
+                id='website_url_field'
+                placeholder='Website URL'
+                {...register('website_url_field')}
+              />
+
+              {errors.website_url_field?.message && (
+                <p className='ml-1 mt-2 text-sm text-rose-400'>
+                  {errors.website_url_field.message}
+                </p>
+              )}
+            </div>
           </div>
           <div className='mt-6'>
             <Button

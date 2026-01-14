@@ -10,6 +10,7 @@ export const ContactFormSchema = z.object({
   .min(1, { message: 'Email is required.' })
   .email('Invalid email.'),
   message: z.string().min(1, { message: 'Message is required.' }),
+  website_url_field: z.string().optional(),
   // recaptchaToken: z.string().min(1, { message: 'Bot verification is required.' })
 })
 
